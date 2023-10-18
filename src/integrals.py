@@ -2,7 +2,7 @@ import pandas as pd
 from typing import Callable
 import inspect
 """"""""""""""""""""
-def integration(f: Callable,dim:int,points: int,wezly: str = "./csv/wezly.csv"):
+def integration(f: Callable,dim:int,points: int,wezly: str = "./data/csv/wezly.csv"):
     """
     :param f: całkowana funkcja f(x) lub f(x,y)
     :param dim: rozmiar przestrzenii
@@ -16,6 +16,8 @@ def integration(f: Callable,dim:int,points: int,wezly: str = "./csv/wezly.csv"):
         return df
     df = wczytaj_wezly(wezly)
     num_args = len(inspect.signature(f).parameters) # Zabezpieczenie przed funkcją o nieprawidłowej liczbie zmiennych
+
+    assert dim == num_args, "Niezgodność rozmiaru przestrzeni i zmiennych przyjmowanych przez funkcje"
 
     if dim == 1 and points == 2 and num_args == 1:
         w1 = df.loc[(df['N'] == 1) & (df['k'] == 0)]["Ak"].values[0]
@@ -55,7 +57,7 @@ def integration(f: Callable,dim:int,points: int,wezly: str = "./csv/wezly.csv"):
         + w3*w1 * f(x1,x3) + w3*w2 * f(x1,x2) + w3**2 * f(x1,x1))
 
     else:
-        print("Błąd całkowania")
-        pass
+        raise Exception("Brak implementacji dla zadanych parametrów kwadratury")
+
 
 

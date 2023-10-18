@@ -31,7 +31,6 @@ class Global_Data:
     def __getitem__(self, key: str) -> int:
         return self.variables.get(key, None)
 
-"""Klasy pomocnicze:"""
 class Node:
     def __init__(self,x:float,y:float):
         self.x = x
