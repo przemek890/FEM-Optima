@@ -40,11 +40,9 @@ def test_write_3():
     print("------------")
     for i in range(len(grid.elements)):
         print(f"{i+1}) vec[0]: {grid.elements[i].vec[0]} , vec[3]: {grid.elements[i].vec[3]}")
-
-
 def test_integrate():
     wyn_1 = integration(f=f_1,dim=1,points=2)
     wyn_2 = integration(f=f_1, dim=1, points=3)
     wyn_3 = integration(f=f_2,dim=2,points=2)
     wyn_4 = integration(f=f_2, dim=2, points=3)
-    print(f"d1/p2: {wyn_1} , d1/p3: {wyn_2} , d2/p2: {wyn_3} , d2/p3: {wyn_4}")
+    print(f"d1/p2: {wyn_1}\nd1/p3: {wyn_2}\nd2/p2: {wyn_3}\nd2/p3: {wyn_4}\n")
