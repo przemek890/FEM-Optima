@@ -1,60 +1,64 @@
 import pandas as pd
 from typing import Callable
 import inspect
+import numpy as np
 """"""""""""""""""""
-def wczytaj_wezly(file_path):
-    df = pd.read_csv(file_path)
-    df.columns = df.columns.str.strip()
-    return df
 """"""""""""""""""""
-def integration(f: Callable,dim:int,points: int,df=wczytaj_wezly("./data/csv/wezly.csv")):
-    """
-    :param f: całkowana funkcja f(x) lub f(x,y)
-    :param dim: rozmiar przestrzenii
-    :param points: x punktowy schemat calkowania
-    :param wezly: plik .csv z wezłami do kwadratury
-    :return: wynik całki na przedziale [-1,1]
-    """
-
+def integration(f: Callable,dim:int,points: int,):
     num_args = len(inspect.signature(f).parameters) # Zabezpieczenie przed funkcją o nieprawidłowej liczbie zmiennych
     assert dim == num_args, "Niezgodność rozmiaru przestrzeni i zmiennych przyjmowanych przez funkcje"
-
     if dim == 1 and points == 2 and num_args == 1:
-        w1 = df.loc[(df['N'] == 1) & (df['k'] == 0)]["Ak"].values[0]
-        w2 = df.loc[(df['N'] == 1) & (df['k'] == 1)]["Ak"].values[0]
-        x1 = df.loc[(df['N'] == 1) & (df['k'] == 0)]["xk"].values[0]
-        x2 = df.loc[(df['N'] == 1) & (df['k'] == 1)]["xk"].values[0]
-        return w1 * f(x2) + w2 * f(x1)
-
+        w11 = 1.0
+        w21 = w11
+        x11 = np.sqrt(1/3)
+        x21 = -x11
+        return w11 * f(x21) + w21 * f(x11)
     elif dim == 1 and points == 3 and num_args == 1:
-        w1 = df.loc[(df['N'] == 2) & (df['k'] == 0)]["Ak"].values[0]
-        w2 = df.loc[(df['N'] == 2) & (df['k'] == 1)]["Ak"].values[0]
-        w3 = df.loc[(df['N'] == 2) & (df['k'] == 2)]["Ak"].values[0]
-        x1 = df.loc[(df['N'] == 2) & (df['k'] == 0)]["xk"].values[0]
-        x2 = df.loc[(df['N'] == 2) & (df['k'] == 1)]["xk"].values[0]
-        x3 = df.loc[(df['N'] == 2) & (df['k'] == 2)]["xk"].values[0]
-
-        return w1 * f(x1) + w2 * f(x2) + w3 * f(x3)
-
+        w11 = 5/9
+        w21 = 8/9
+        w31 = 5/9
+        x11 = np.sqrt(3/5)
+        x21 = 0
+        x31 = -x11
+        return w11 * f(x11) + w21 * f(x21) + w31 * f(x31)
+    elif dim == 1 and points == 4 and num_args == 1:
+        w11 = (18 - np.sqrt(30))/ 36
+        w21 = (18 + np.sqrt(30))/ 36
+        w31 = w21
+        w41 = w11
+        x11 = np.sqrt(3/7 + 2/7 * np.sqrt(6/5))
+        x21 = np.sqrt(3/7 - 2/7 * np.sqrt(6/5))
+        x31 = - x21
+        x41 = - x11
+        return w11 * f(x11) + w21 * f(x21) + w31 * f(x31) + w41 * f(x41)
     elif dim == 2 and points == 2 and num_args == 2:
-        w1 = df.loc[(df['N'] == 1) & (df['k'] == 0)]["Ak"].values[0]
-        w2 = df.loc[(df['N'] == 1) & (df['k'] == 1)]["Ak"].values[0]
-        x1 = df.loc[(df['N'] == 1) & (df['k'] == 0)]["xk"].values[0]
-        x2 = df.loc[(df['N'] == 1) & (df['k'] == 1)]["xk"].values[0]
-
-        return w1**2 * f(x2,x2) + w1*w2 * f(x1,x2) + w2**2 * f(x1,x1) + w1*w2 * f(x2,x1)
-
+        w11 = 1.0
+        w21 = w11
+        x11 = np.sqrt(1 / 3)
+        x21 = -x11
+        return w11**2 * f(x21,x21) + w11*w21 * f(x11,x21) + w21**2 * f(x11,x11) + w11*w21 * f(x21,x11)
     elif dim == 2 and points == 3 and num_args == 2:
-        w1 = df.loc[(df['N'] == 2) & (df['k'] == 0)]["Ak"].values[0]
-        w2 = df.loc[(df['N'] == 2) & (df['k'] == 1)]["Ak"].values[0]
-        w3 = df.loc[(df['N'] == 2) & (df['k'] == 2)]["Ak"].values[0]
-        x1 = df.loc[(df['N'] == 2) & (df['k'] == 0)]["xk"].values[0]
-        x2 = df.loc[(df['N'] == 2) & (df['k'] == 1)]["xk"].values[0]
-        x3 = df.loc[(df['N'] == 2) & (df['k'] == 2)]["xk"].values[0]
-
-        return (w1**2 * f(x3,x3) + w1*w2 * f(x3,x2) + w1*w3 * f(x3,x1) +
-        + w2*w1 * f(x2,x3) + w2**2 * f(x2,x2) + w2*w3 * f(x2,x1) +
-        + w3*w1 * f(x1,x3) + w3*w2 * f(x1,x2) + w3**2 * f(x1,x1))
-
+        w11 = 5/9
+        w21 = 8/9
+        w31 = 5/9
+        x11 = np.sqrt(3/5)
+        x21 = 0
+        x31 = -x11
+        return (w11**2 * f(x31,x31) + w11*w21 * f(x31,x21) + w11*w31 * f(x31,x11) +
+        + w21*w11 * f(x21,x31) + w21**2 * f(x21,x21) + w21*w31 * f(x21,x11) +
+        + w31*w11 * f(x11,x31) + w31*w21 * f(x11,x21) + w31**2 * f(x11,x11))
+    elif dim == 2 and points == 4 and num_args == 2:
+        w11 = (18 - np.sqrt(30))/ 36
+        w21 = (18 + np.sqrt(30))/ 36
+        w31 = w21
+        w41 = w11
+        x11 = np.sqrt(3/7 + 2/7 * np.sqrt(6/5))
+        x21 = np.sqrt(3/7 - 2/7 * np.sqrt(6/5))
+        x31 = - x21
+        x41 = - x11
+        return (w11 ** 2 * f(x41, x41) + w11 * w21 * f(x41, x31) + w11 * w31 * f(x41, x21) + w11 * w41 * f(x41, x11) +
+                + w21 * w11 * f(x31, x41) + w21**2 * f(x31, x31) + w21 * w31 * f(x31, x21) + w21 * w41 * f(x31, x11) +
+                + w31 * w11 * f(x21, x41) + w31 * w21 * f(x21, x31) + w31**2 * f(x21, x21) + w31 * w41 * f(x21, x11) +
+                + w41 * w11 * f(x11, x41) + w41 * w21 * f(x11, x31) + w41 * w31 * f(x11, x21) + w41**2 * f(x11, x11))
     else:
         raise Exception("Brak implementacji dla zadanych parametrów kwadratury")
