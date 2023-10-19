@@ -3,62 +3,47 @@ from typing import Callable
 import inspect
 import numpy as np
 """"""""""""""""""""
+points_2 = [np.sqrt(1/3),-np.sqrt(1/3)]
+weights_2 = [1.0,1.0]
+points_3 = [np.sqrt(3/5),0,-np.sqrt(3/5)]
+weights_3 = [5/9,8/9,5/9]
+points_4 = [np.sqrt(3/7 + 2/7 * np.sqrt(6/5)),np.sqrt(3/7 - 2/7 * np.sqrt(6/5)),-np.sqrt(3/7 - 2/7 * np.sqrt(6/5)),-np.sqrt(3/7 + 2/7 * np.sqrt(6/5))]
+weights_4 = [(18 - np.sqrt(30))/ 36,(18 + np.sqrt(30))/ 36,(18 + np.sqrt(30))/ 36,(18 - np.sqrt(30))/ 36]
+gauss = {"w2":weights_2,"p2":points_2,"w3":weights_3,"p3":points_3,"w4":weights_4,"p4":points_4}
 """"""""""""""""""""
 def integration(f: Callable,dim:int,points: int,):
+    wynik = 0
     num_args = len(inspect.signature(f).parameters) # Zabezpieczenie przed funkcją o nieprawidłowej liczbie zmiennych
     assert dim == num_args, "Niezgodność rozmiaru przestrzeni i zmiennych przyjmowanych przez funkcje"
+
     if dim == 1 and points == 2 and num_args == 1:
-        w11 = 1.0
-        w21 = w11
-        x11 = np.sqrt(1/3)
-        x21 = -x11
-        return w11 * f(x21) + w21 * f(x11)
+        for w, x in zip(gauss["w2"], gauss["p2"]):
+            wynik += w * f(x)
+        return wynik
     elif dim == 1 and points == 3 and num_args == 1:
-        w11 = 5/9
-        w21 = 8/9
-        w31 = 5/9
-        x11 = np.sqrt(3/5)
-        x21 = 0
-        x31 = -x11
-        return w11 * f(x11) + w21 * f(x21) + w31 * f(x31)
+        for w,x in zip(gauss["w3"],gauss["p3"]):
+            wynik += w * f(x)
+        return wynik
     elif dim == 1 and points == 4 and num_args == 1:
-        w11 = (18 - np.sqrt(30))/ 36
-        w21 = (18 + np.sqrt(30))/ 36
-        w31 = w21
-        w41 = w11
-        x11 = np.sqrt(3/7 + 2/7 * np.sqrt(6/5))
-        x21 = np.sqrt(3/7 - 2/7 * np.sqrt(6/5))
-        x31 = - x21
-        x41 = - x11
-        return w11 * f(x11) + w21 * f(x21) + w31 * f(x31) + w41 * f(x41)
+        for w, x in zip(gauss["w4"], gauss["p4"]):
+            wynik += w * f(x)
+        return wynik
+
     elif dim == 2 and points == 2 and num_args == 2:
-        w11 = 1.0
-        w21 = w11
-        x11 = np.sqrt(1 / 3)
-        x21 = -x11
-        return w11**2 * f(x21,x21) + w11*w21 * f(x11,x21) + w21**2 * f(x11,x11) + w11*w21 * f(x21,x11)
+        for w1, x1 in zip(gauss["w2"], reversed(gauss["p2"])):
+            for w2, x2 in zip(gauss["w2"], reversed(gauss["p2"])):
+                wynik += w1 * w2 * f(x2,x1)
+        return wynik
     elif dim == 2 and points == 3 and num_args == 2:
-        w11 = 5/9
-        w21 = 8/9
-        w31 = 5/9
-        x11 = np.sqrt(3/5)
-        x21 = 0
-        x31 = -x11
-        return (w11**2 * f(x31,x31) + w11*w21 * f(x31,x21) + w11*w31 * f(x31,x11) +
-        + w21*w11 * f(x21,x31) + w21**2 * f(x21,x21) + w21*w31 * f(x21,x11) +
-        + w31*w11 * f(x11,x31) + w31*w21 * f(x11,x21) + w31**2 * f(x11,x11))
+        for w1, x1 in zip(gauss["w3"], reversed(gauss["p3"])):
+            for w2, x2 in zip(gauss["w3"], reversed(gauss["p3"])):
+                wynik += w1 * w2 * f(x2,x1)
+        return wynik
     elif dim == 2 and points == 4 and num_args == 2:
-        w11 = (18 - np.sqrt(30))/ 36
-        w21 = (18 + np.sqrt(30))/ 36
-        w31 = w21
-        w41 = w11
-        x11 = np.sqrt(3/7 + 2/7 * np.sqrt(6/5))
-        x21 = np.sqrt(3/7 - 2/7 * np.sqrt(6/5))
-        x31 = - x21
-        x41 = - x11
-        return (w11**2 * f(x41, x41) + w11 * w21 * f(x41, x31) + w11 * w31 * f(x41, x21) + w11 * w41 * f(x41, x11) +
-                + w21 * w11 * f(x31, x41) + w21**2 * f(x31, x31) + w21 * w31 * f(x31, x21) + w21 * w41 * f(x31, x11) +
-                + w31 * w11 * f(x21, x41) + w31 * w21 * f(x21, x31) + w31**2 * f(x21, x21) + w31 * w41 * f(x21, x11) +
-                + w41 * w11 * f(x11, x41) + w41 * w21 * f(x11, x31) + w41 * w31 * f(x11, x21) + w41**2 * f(x11, x11))
+        for w1, x1 in zip(gauss["w4"], reversed(gauss["p4"])):
+            for w2, x2 in zip(gauss["w4"], reversed(gauss["p4"])):
+                wynik += w1 * w2 * f(x2,x1)
+        return wynik
+
     else:
         raise Exception("Brak implementacji dla zadanych parametrów kwadratury")
