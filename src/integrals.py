@@ -56,7 +56,7 @@ def integration(f: Callable,dim:int,points: int,):
         x21 = np.sqrt(3/7 - 2/7 * np.sqrt(6/5))
         x31 = - x21
         x41 = - x11
-        return (w11 ** 2 * f(x41, x41) + w11 * w21 * f(x41, x31) + w11 * w31 * f(x41, x21) + w11 * w41 * f(x41, x11) +
+        return (w11**2 * f(x41, x41) + w11 * w21 * f(x41, x31) + w11 * w31 * f(x41, x21) + w11 * w41 * f(x41, x11) +
                 + w21 * w11 * f(x31, x41) + w21**2 * f(x31, x31) + w21 * w31 * f(x31, x21) + w21 * w41 * f(x31, x11) +
                 + w31 * w11 * f(x21, x41) + w31 * w21 * f(x21, x31) + w31**2 * f(x21, x21) + w31 * w41 * f(x21, x11) +
                 + w41 * w11 * f(x11, x41) + w41 * w21 * f(x11, x31) + w41 * w31 * f(x11, x21) + w41**2 * f(x11, x11))
