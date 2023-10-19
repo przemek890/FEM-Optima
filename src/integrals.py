@@ -2,7 +2,12 @@ import pandas as pd
 from typing import Callable
 import inspect
 """"""""""""""""""""
-def integration(f: Callable,dim:int,points: int,wezly: str = "./data/csv/wezly.csv"):
+def wczytaj_wezly(file_path):
+    df = pd.read_csv(file_path)
+    df.columns = df.columns.str.strip()
+    return df
+""""""""""""""""""""
+def integration(f: Callable,dim:int,points: int,df=wczytaj_wezly("./data/csv/wezly.csv")):
     """
     :param f: całkowana funkcja f(x) lub f(x,y)
     :param dim: rozmiar przestrzenii
@@ -10,13 +15,8 @@ def integration(f: Callable,dim:int,points: int,wezly: str = "./data/csv/wezly.c
     :param wezly: plik .csv z wezłami do kwadratury
     :return: wynik całki na przedziale [-1,1]
     """
-    def wczytaj_wezly(file_path):
-        df = pd.read_csv(file_path)
-        df.columns = df.columns.str.strip()
-        return df
-    df = wczytaj_wezly(wezly)
-    num_args = len(inspect.signature(f).parameters) # Zabezpieczenie przed funkcją o nieprawidłowej liczbie zmiennych
 
+    num_args = len(inspect.signature(f).parameters) # Zabezpieczenie przed funkcją o nieprawidłowej liczbie zmiennych
     assert dim == num_args, "Niezgodność rozmiaru przestrzeni i zmiennych przyjmowanych przez funkcje"
 
     if dim == 1 and points == 2 and num_args == 1:
@@ -58,6 +58,3 @@ def integration(f: Callable,dim:int,points: int,wezly: str = "./data/csv/wezly.c
 
     else:
         raise Exception("Brak implementacji dla zadanych parametrów kwadratury")
-
-
-
