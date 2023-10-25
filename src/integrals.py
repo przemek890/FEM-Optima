@@ -11,7 +11,7 @@ points_4 = [np.sqrt(3/7 + 2/7 * np.sqrt(6/5)),np.sqrt(3/7 - 2/7 * np.sqrt(6/5)),
 weights_4 = [(18 - np.sqrt(30))/ 36,(18 + np.sqrt(30))/ 36,(18 + np.sqrt(30))/ 36,(18 - np.sqrt(30))/ 36]
 gauss = {"w2":weights_2,"p2":points_2,"w3":weights_3,"p3":points_3,"w4":weights_4,"p4":points_4}
 """"""""""""""""""""
-def integration(f: Callable,dim:int,points: int,):
+def integration(f: Callable,dim:int,points: int):
     wynik = 0
     num_args = len(inspect.signature(f).parameters) # Zabezpieczenie przed funkcją o nieprawidłowej liczbie zmiennych
     assert dim == num_args, "Niezgodność rozmiaru przestrzeni i zmiennych przyjmowanych przez funkcje"
