@@ -1,6 +1,5 @@
-from tests.test import test_write
-from tests.test import test_integrate
-from src.jacobian import model
+from tests.test import test_write, test_integrate, test_jacobian
+from src.jacobian import Model, funkcja
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
 path2 = "./data/txt/Test2.txt"
@@ -12,8 +11,6 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_write(path=path2)
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
+# test_jacobian(path=path1)
 
-
-print(model(path1))
-
-
+print(Model(ksi=3.0,eta=7.0,path=path1))
