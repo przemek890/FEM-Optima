@@ -35,9 +35,14 @@ class Node:
     def __init__(self,x:float,y:float):
         self.x = x
         self.y = y
+    def to_tuple(self):
+        return (self.x, self.y)
 class Element:
-    def __init__(self,vec_4:list[4]):
+    def __init__(self,vec_4: list):
+        # 4 - elementowa lista punktów
         self.vec = vec_4
+
+
 
 """x = grid.nodes[i].x el_4 = grid.elements[i].vec[j]"""
 class Grid:
@@ -71,7 +76,8 @@ class Grid:
                     parts = line.strip().split(",")
                     if len(parts) == 5:
                         vec_4 = [int(x) for x in parts][1:]
-                        self.elements.append(Element(vec_4))
+                        vec_4_points = [self.nodes[i-1] for i in vec_4]
+                        self.elements.append(Element(vec_4_points))
 
     @property
     def node(self):
