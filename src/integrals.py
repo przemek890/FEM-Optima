@@ -1,4 +1,3 @@
-import pandas as pd
 from typing import Callable
 import inspect
 import numpy as np

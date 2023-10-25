@@ -32,17 +32,39 @@ class Global_Data:
         return self.variables.get(key, None)
 
 class Node:
-    def __init__(self,x:float,y:float):
-        self.x = x
-        self.y = y
+    def __init__(self, x: float, y: float):
+        self._x = x
+        self._y = y
+
     def to_tuple(self):
-        return (self.x, self.y)
+        return (self._x, self._y)
+
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, value):
+        self._x = value
+
+    @property
+    def y(self):
+        return self._y
+
+    @y.setter
+    def y(self, value):
+        self._y = value
+
 class Element:
-    def __init__(self,vec_4: list):
-        # 4 - elementowa lista punktów
-        self.vec = vec_4
+    def __init__(self,vec4: list):
+        self.vec = vec4      # 4 - elementowa lista punktów
+    def __getitem__(self, index):
+        return self.vec[index]
+    def __len__(self):
+        return len(self.vec)
 
-
+    def to_list(self):
+        return self.vec
 
 """x = grid.nodes[i].x el_4 = grid.elements[i].vec[j]"""
 class Grid:

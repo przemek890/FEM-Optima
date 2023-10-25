@@ -1,5 +1,6 @@
 from tests.test import test_write
 from tests.test import test_integrate
+from src.jacobian import model
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
 path2 = "./data/txt/Test2.txt"
@@ -13,6 +14,6 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_integrate(f1=f_1,f2=f_2)
 
 
-
+print(model(path1))
 
 
