@@ -25,7 +25,7 @@ def test_integrate(f1,f2):
     print(f"d1/p2: {wyn_1}\nd1/p3: {wyn_2}\nd1/p4: {wyn_3}\nd2/p2: {wyn_4}\nd2/p3: {wyn_5}\nd2/p4: {wyn_6}")
     print("------------")
 def test_jacobian(path):
-    def f_test(ksi, eta, vec4, node_i, is_x):
+    def f_test(ksi, eta, vec4, node_i, is_ksi):
         import numpy as np
         dxde = lambda vec4, eta: 0.25 * eta * (vec4[0].x - vec4[1].x + vec4[2].x - vec4[3].x) + 0.25 * (
                     - vec4[0].x + vec4[1].x + vec4[2].x - vec4[3].x)
@@ -60,19 +60,24 @@ def test_jacobian(path):
 
         wynik = matrix @ ((1. / determinant) * reverse_mat @ vec_p)
 
-        if is_x is True: return wynik[0]
+        if is_ksi is True: return wynik[0]
         else: return wynik[1]
     """"""""""""""""""""""""""""""""""""""""""
-    new_elements = []
+    new_elements_ksi = []
+    new_elements_eta = []
 
     grid = Grid(path)
     for vec4 in grid.elements:  # dla każdego wektora
-        element = []
+        element_ksi = []
+        element_eta = []
         for i in range(4):      # dla kazdej krotki punktowej w wektorze
-            x_new = integration(lambda ksi, eta: f_test(ksi, eta, vec4, i, is_x=True), 2, 4)
-            y_new = integration(lambda ksi, eta: f_test(ksi, eta, vec4, i, is_x=False), 2, 4)
-            element.append((x_new,y_new))
+            x_new = integration(lambda ksi, eta: f_test(ksi, eta, vec4, i, is_ksi=True), 2, 4)
+            y_new = integration(lambda ksi, eta: f_test(ksi, eta, vec4, i, is_ksi=False), 2, 4)
+            element_ksi.append(x_new)
+            element_eta.append(y_new)
 
-        new_elements.append(element)
-    print(new_elements)
+        new_elements_ksi.append(tuple(element_ksi))
+        new_elements_eta.append(tuple(element_eta))
+    print("ksi elements test: ", new_elements_ksi)
+    print("\n\neta elements test: ", new_elements_eta)
     # Jeżeli pary punktów są blisko: (-1,-1), (1,-1), (1,1), (-1,1) to poprawne przekształcenie na układ lokalny
