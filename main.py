@@ -1,4 +1,4 @@
-from tests.test import test_write, test_integrate
+from tests.test import *
 from src.Element_uniwersalny import dNdksi, dNdeta
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
@@ -11,9 +11,4 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_write(path=path2)
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
-
-test = dNdksi(2)
-test2 = dNdeta(2)
-
-print(test.matrix)
-print("\n",test2.matrix)
+test_element_uniwersalny()
