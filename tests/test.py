@@ -1,6 +1,7 @@
 from src.siatka import Global_Data,Grid
 from src.integrals import integration
 from src.Element_uniwersalny import dNdeta, dNdksi
+from src.MacierzH import Matrix_H
 """"""""""""""""""""""""""""""""""""""""""
 def test_write(path):
     print("---------------------------Test_1---------------------------")
@@ -39,4 +40,9 @@ def test_element_uniwersalny():
     test2_3 = dNdeta(4)
     print(f"dNdksi: {test1_3.matrix}\n dNdeta: {test2_3.matrix}\n")
 
+    print("------------")
+def test_macierz_H(path):
+    print("---------------------------MACIERZ_H_TEST---------------------------")
+    test = Matrix_H(dim=2, points=2, path=path)
+    print(f"{test.get_H_matrices()}")
     print("------------")

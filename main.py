@@ -10,12 +10,6 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_write(path=path2)
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
-# test_element_uniwersalny()
+test_element_uniwersalny()
+# test_macierz_H(path1)
 
-from src.MacierzH import Matrix_H
-
-test = Matrix_H(2)
-
-
-
-print(f"{test.Get_H_matrices()}")
