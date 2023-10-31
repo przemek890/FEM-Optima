@@ -1,6 +1,7 @@
 import numpy as np
 from src.siatka import Grid
 from src.Element_uniwersalny import *
+from data.Gauss_points import gauss_weights
 """"""""""""""""""""""""
 class Matrix_H:
     def __init__(self, points):
@@ -31,10 +32,16 @@ class Matrix_H:
 
             self.matrix_dx,self.matrix_dy = self.transposition_multiply()   # Tablica macierzy po przemnożeniu każdego wiersza przez jego transpozycje
 
-            self.H_matrices = []
+            self.H_matrix = []  # Tablica poszczególnych macierzy cząstkowych - macierzy H
             for i in range(4):
                 H_i = self.k * (self.matrix_dx[i] + self.matrix_dy[i]) * self.jacobian
-                self.H_matrices .append(H_i)
+                self.H_matrix.append(H_i)
+
+            wyn_H = np.zeros((4,4))
+            for i,w in enumerate(gauss_weights["w2"]):
+                    wyn_H += w[0] * w[1] * self.H_matrix[i]
+
+            self.H_matrix = np.sum(self.H_matrix,axis=0)
 
 
         else:
@@ -74,7 +81,6 @@ class Matrix_H:
 
 
             return H_matrices_for_points_x,H_matrices_for_points_y
-
     def Get_H_matrices(self):
-        return self.H_matrices
+        return self.H_matrix
 
