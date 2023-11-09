@@ -14,17 +14,20 @@ class dNdksi:
             for i in range(4):
                 for j in range(4):
                     self.matrix[i][j] = self.funkcje[i](*gauss_points["p2"][j])
+            self.matrix = self.matrix.T
 
         elif points == 3:
             self.matrix = np.zeros((4, 9))
             for i in range(4):
                 for j in range(9):
                     self.matrix[i][j] = self.funkcje[i](*gauss_points["p3"][j])
+            self.matrix = self.matrix.T
         elif points == 4:
             self.matrix = np.zeros((4, 16))
             for i in range(4):
                 for j in range(16):
                     self.matrix[i][j] = self.funkcje[i](*gauss_points["p4"][j])
+            self.matrix = self.matrix.T
 
         else: raise("Bład liczby puntow")
 
@@ -44,17 +47,20 @@ class dNdeta:
             for i in range(4):
                 for j in range(4):
                     self.matrix[i][j] = self.funkcje[i](*gauss_points["p2"][j])
+            self.matrix = self.matrix.T
 
         elif points == 3:
             self.matrix = np.zeros((4, 9))
             for i in range(4):
                 for j in range(9):
                     self.matrix[i][j] = self.funkcje[i](*gauss_points["p3"][j])
+            self.matrix = self.matrix.T
         elif points == 4:
             self.matrix = np.zeros((4, 16))
             for i in range(4):
                 for j in range(16):
                     self.matrix[i][j] = self.funkcje[i](*gauss_points["p4"][j])
+            self.matrix = self.matrix.T
 
         else:
             raise ("Bład liczby puntow")

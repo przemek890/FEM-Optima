@@ -11,7 +11,6 @@ class Matrix_H:
             self.k = 30
             vec_el_ksi = dNdksi(2)
             vec_el_eta = dNdeta(2)
-
             self.H_matrices = []    # Lista macierzy H dla wszystkich elementów vec4
             for vec_4 in grid.elements:
                 H_matrix = self.generate_H_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4)
@@ -21,46 +20,15 @@ class Matrix_H:
             raise ("Bład liczby puntow")
 
 
-
-    @staticmethod
-    def przejscie(ksi, eta, vec2, vec4):
-        dxdksi = lambda vec4, eta: 0.25 * eta * (vec4[0].x - vec4[1].x + vec4[2].x - vec4[3].x) + 0.25 * (
-                    - vec4[0].x + vec4[1].x + vec4[2].x - vec4[3].x)
-        dydksi = lambda vec4, eta: 0.25 * eta * (vec4[0].y - vec4[1].y + vec4[2].y - vec4[3].y) + 0.25 * (
-                    - vec4[0].y + vec4[1].y + vec4[2].y - vec4[3].y)
-        dxdeta = lambda vec4, ksi: 0.25 * ksi * (vec4[0].x - vec4[1].x + vec4[2].x - vec4[3].x) + 0.25 * (
-                    - vec4[0].x - vec4[1].x + vec4[2].x + vec4[3].x)
-        dydeta = lambda vec4, ksi: 0.25 * ksi * (vec4[0].y - vec4[1].y + vec4[2].y - vec4[3].y) + 0.25 * (
-                    - vec4[0].y - vec4[1].y + vec4[2].y + vec4[3].y)
-
-        matrix = np.array([[dxdksi(vec4, eta), dxdeta(vec4, ksi)], [dydksi(vec4, eta), dydeta(vec4, ksi)]])
-        determinant = np.linalg.det(matrix)
-        reverse_mat = np.array([[dydeta(vec4, ksi), -dxdeta(vec4, ksi)], [-dydksi(vec4, eta), dxdksi(vec4, eta)]])
-
-        wynik = (1. / determinant) * reverse_mat @ vec2
-
-        return wynik, determinant
-    def transposition_multiply(self):
-        H_matrices_for_points_x = []
-        H_matrices_for_points_y = []
-        if self.points == 2:
-            for i in range(4):
-                H_matrix = np.array([self.matrix_dx[:,i]]).T @ [self.matrix_dx[:,i]] # Odwrotnie transpozycja z powodu zapisu w macierzy na odwrót
-                H_matrices_for_points_x.append(H_matrix)
-
-            for i in range(4):
-                H_matrix = np.array([self.matrix_dy[:,i]]).T @ [self.matrix_dy[:,i]] # Odwrotnie transpozycja z powodu zapisu w macierzy na odwrót
-                H_matrices_for_points_y.append(H_matrix)
-
-
-            return H_matrices_for_points_x,H_matrices_for_points_y
     def generate_H_matrix_for_element(self,vec_el_ksi,vec_el_eta,vec_4):
         self.matrix_dx = np.zeros((4, 4))
         self.matrix_dy = np.zeros((4, 4))
         for i in range(4):
             for j in range(4):
-                vec_2 = np.array([vec_el_ksi.matrix[i][j], vec_el_eta.matrix[i][j]])
-                wynik = self.przejscie(*gauss_points["p2"][j], vec_2, vec_4)
+                vec_2 = np.array([[vec_el_ksi.matrix[i,j], vec_el_eta.matrix[i,j]]])
+                vec_dNidksi = np.array(vec_el_ksi.matrix[i,:])
+                vec_dNideta = np.array(vec_el_eta.matrix[i,:])
+                wynik = self.przejscie(vec_dNidksi,vec_dNideta,vec_2, vec_4)
                 vec_dx_dy = wynik[0]
                 self.jacobian = wynik[1]
                 self.matrix_dx[i][j] = vec_dx_dy[0]
@@ -80,6 +48,38 @@ class Matrix_H:
         self.H_matrix = np.sum(self.H_matrix, axis=0)
 
         return self.H_matrix
+    @staticmethod
+    def przejscie(vec_dNidksi,vec_dNideta,vec2,vec4):
+        dxdksi = vec_dNidksi[0] * vec4[0].x + vec_dNidksi[1] * vec4[1].x + vec_dNidksi[2] * vec4[2].x + vec_dNidksi[3] * vec4[3].x
+        dydksi = vec_dNidksi[0] * vec4[0].y + vec_dNidksi[1] * vec4[1].y + vec_dNidksi[2] * vec4[2].y + vec_dNidksi[3] * vec4[3].y
+        dxdeta = vec_dNideta[0] * vec4[0].x + vec_dNideta[1] * vec4[1].x + vec_dNideta[2] * vec4[2].x + vec_dNideta[3] * vec4[3].x
+        dydeta = vec_dNideta[0] * vec4[0].y + vec_dNideta[1] * vec4[1].y + vec_dNideta[2] * vec4[2].y + vec_dNideta[3] * vec4[3].y
+
+        matrix = np.array([[dxdksi,dydksi],
+                           [dxdeta, dydeta]])
+
+        determinant = np.linalg.det(matrix)
+        reverse_mat = np.array([[dydeta,-dydksi],
+                                [-dxdeta , dxdksi]])
+
+        wynik = (1. / determinant) * reverse_mat @ vec2.T
+
+        return wynik, determinant
+    def transposition_multiply(self):
+        H_matrices_for_points_x = []
+        H_matrices_for_points_y = []
+        if self.points == 2:
+            for i in range(4):
+                H_matrix = np.array([self.matrix_dx[i,:]]).T @ [self.matrix_dx[i,:]] # Odwrotnie transpozycja z powodu zapisu w macierzy na odwrót
+                H_matrices_for_points_x.append(H_matrix)
+
+
+            for i in range(4):
+                H_matrix = np.array([self.matrix_dy[i,:]]).T @ [self.matrix_dy[i,:]] # Odwrotnie transpozycja z powodu zapisu w macierzy na odwrót
+                H_matrices_for_points_y.append(H_matrix)
+
+            return H_matrices_for_points_x,H_matrices_for_points_y
+
 
     def get_H_matrices(self):
         return self.H_matrices

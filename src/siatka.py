@@ -1,3 +1,5 @@
+
+
 """SimulationTime = global_data["SimulationTime"] gdzie global_data to obiekt klasy Global_Data"""
 class Global_Data:
     '''
