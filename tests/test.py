@@ -41,8 +41,8 @@ def test_element_uniwersalny():
     print(f"dNdksi: {test1_3.matrix}\n dNdeta: {test2_3.matrix}\n")
 
     print("------------")
-def test_macierz_H(path,dim,points):
+def test_macierz_H(path):
     print("---------------------------MACIERZ_H_TEST---------------------------")
-    test = Matrix_H(dim=dim, points=points, path=path)
+    test = Matrix_H(dim=2, points=2, path=path)
     print(f"{test.get_H_matrices()}")
     print("------------")
