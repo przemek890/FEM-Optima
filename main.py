@@ -1,3 +1,4 @@
+from data.Gauss_points import gauss_points
 from tests.test import *
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
@@ -11,5 +12,6 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
 # test_element_uniwersalny()
-test_macierz_H(path3)
+test_macierz_H(path2,points=3)
+
 

@@ -16,4 +16,4 @@ gauss_points = {"p2":tab_p2,"p3":tab_p3,"p4":tab_p4}
 tab_w2 = [(w1, w2) for w1 in reversed(gauss["w2"]) for w2 in reversed(gauss["w2"])]
 tab_w3 = [(w1, w2) for w1 in reversed(gauss["w3"]) for w2 in reversed(gauss["w3"])]
 tab_w4 = [(w1, w2) for w1 in reversed(gauss["w4"]) for w2 in reversed(gauss["w4"])]
-gauss_weights = {"w2":tab_p2,"w3":tab_p3,"w4":tab_p4}
+gauss_weights = {"w2":tab_w2,"w3":tab_w3,"w4":tab_w4}
