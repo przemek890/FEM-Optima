@@ -1,5 +1,4 @@
 
-
 """SimulationTime = global_data["SimulationTime"] gdzie global_data to obiekt klasy Global_Data"""
 class Global_Data:
     '''
@@ -60,6 +59,7 @@ class Node:
 class Element:
     def __init__(self,vec4: list):
         self.vec = vec4      # 4 - elementowa lista punktów
+        self._matrix_H = None
     def __getitem__(self, index):
         return self.vec[index]
     def __len__(self):
@@ -67,6 +67,17 @@ class Element:
 
     def to_list(self):
         return self.vec
+
+    @property
+    def matrix_H(self):
+        if self._matrix_H is not None:
+            return self._matrix_H
+        else:
+            print("Dany element nie posiada jeszcze Macierzy H - zwrócono None")
+            return None
+    @matrix_H.setter
+    def matrix_H(self, value):
+        self._matrix_H = value
 
 """x = grid.nodes[i].x el_4 = grid.elements[i].vec[j]"""
 class Grid:
@@ -102,6 +113,7 @@ class Grid:
                         vec_4 = [int(x) for x in parts][1:]
                         vec_4_points = [self.nodes[i-1] for i in vec_4]
                         self.elements.append(Element(vec_4_points))
+
 
     @property
     def node(self):
