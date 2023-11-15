@@ -1,4 +1,3 @@
-
 """SimulationTime = global_data["SimulationTime"] gdzie global_data to obiekt klasy Global_Data"""
 class Global_Data:
     '''
@@ -36,6 +35,7 @@ class Node:
     def __init__(self, x: float, y: float):
         self._x = x
         self._y = y
+        self._BC = None
 
     def to_tuple(self):
         return (self._x, self._y)
@@ -56,10 +56,24 @@ class Node:
     def y(self, value):
         self._y = value
 
+    @property
+    def BC(self):
+        if self._BC is not None:
+            return self._BC
+        else:
+            print("Dany element nie posiada jeszcze BC - zwrócono None")
+            return None
+
+    @BC.setter
+    def BC(self, value):
+        self._BC = value
+
+
 class Element:
     def __init__(self,vec4: list):
         self.vec = vec4      # 4 - elementowa lista punktów
         self._matrix_H = None
+        self._matrix_HBC = None
     def __getitem__(self, index):
         return self.vec[index]
     def __len__(self):
@@ -78,6 +92,18 @@ class Element:
     @matrix_H.setter
     def matrix_H(self, value):
         self._matrix_H = value
+
+
+    @property
+    def matrix_HBC(self):
+        if self._matrix_HBC is not None:
+            return self._matrix_HBC
+        else:
+            print("Dany element nie posiada jeszcze Macierzy H - zwrócono None")
+            return None
+    @matrix_HBC.setter
+    def matrix_HBC(self, value):
+        self._matrix_HBC = value
 
 """x = grid.nodes[i].x el_4 = grid.elements[i].vec[j]"""
 class Grid:
@@ -113,6 +139,19 @@ class Grid:
                         vec_4 = [int(x) for x in parts][1:]
                         vec_4_points = [self.nodes[i-1] for i in vec_4]
                         self.elements.append(Element(vec_4_points))
+
+        """DODAWANIE FLAGI BC DO WEZŁA"""
+        is_node_section = False
+        with open(f"{self.file_path}", "r") as file:
+            for line in file:
+                if line.strip() == "*BC": is_node_section = True
+                elif not line.strip(): is_node_section = False
+
+                elif is_node_section and line.strip():
+                    flags = [int(i) for i in line.strip().split(",")]
+                    for j, node in enumerate(self.nodes):
+                        if j + 1 in flags: node.BC = 1
+                        else: node.BC = 0
 
 
     @property

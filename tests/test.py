@@ -2,6 +2,7 @@ from src.siatka import Global_Data,Grid
 from src.integrals import integration
 from src.Element_uniwersalny import dNdeta, dNdksi
 from src.MacierzH import Matrix_H
+from src.MacierzHBC import Matrix_HBC
 """"""""""""""""""""""""""""""""""""""""""
 def test_write(path):
     print("---------------------------Test_1---------------------------")
@@ -11,7 +12,7 @@ def test_write(path):
     print("------------")
     grid = Grid(path)
     for i in range(len(grid.nodes)):
-        print(f"{i+1}) x: {grid.node[i].x} y: {grid.node[i].y}")
+        print(f"{i+1}) x: {grid.node[i].x} y: {grid.node[i].y} BC: {grid.node[i].BC}")
     print("------------")
     for i in range(len(grid.elements)):
         print(f"{i+1}) vec[0]: {grid.elements[i].vec[0].to_tuple()} , vec[3]: {grid.elements[i].vec[3].to_tuple()}")
@@ -44,5 +45,14 @@ def test_element_uniwersalny():
 def test_macierz_H(path,points):
     print("---------------------------MACIERZ_H_TEST---------------------------")
     test = Matrix_H(points=points, path=path)
-    print(f"{test.get_H_matrices()}")
+    macierze = test.get_H_matrices()
+    for macierz in macierze:
+        print(macierz)
+    print("------------")
+def test_macierz_HBC(points,grid,global_data):
+    print("---------------------------MACIERZ_H_TEST---------------------------")
+    test = Matrix_HBC(points=points, grid=grid,global_data=global_data)
+    macierze = test.get_HBC_matrices()
+    for macierz in macierze:
+        print(macierz)
     print("------------")
