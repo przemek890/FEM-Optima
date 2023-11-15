@@ -48,17 +48,10 @@ def main():
         element.matrix_H = matrix_H.get_H_matrices()[i]             # Dodaj macierz H do elementów
         element.matrix_HBC = matrix_HBC.get_HBC_matrices()[i]       # Dodaj macierz HBC do elementów
 
-    print("\033[91m*************************MACIERZ_H*************************\033[0m")
-    for element in grid.elements:
-        print(element.matrix_H)
-
-    print("\033[91m***********************************************************\033[0m")
     print(f"\033[94m*************************MACIERZ_HBC*************************\033[0m")
     for element in grid.elements:
         print(element.matrix_HBC)
     print(f"\033[94m*************************************************************\033[0m")
-
-
 
 
 if __name__ == "__main__":
