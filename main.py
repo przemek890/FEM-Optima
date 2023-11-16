@@ -12,7 +12,7 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
 # test_element_uniwersalny()
-# test_macierz_H(path2,points=2)
+test_macierz_H(path1,points=2)
 # test_macierz_HBC(points=2,grid=Grid(path3),global_data=Global_Data(path3))
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
 

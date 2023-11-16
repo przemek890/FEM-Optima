@@ -48,8 +48,8 @@ class Matrix_H:
 
         self.H_matrix = []  # Tablica poszczególnych macierzy cząstkowych - macierzy H
         for i in range(self.points ** 2):
-            H_i = self.k * (self.matrix_dx[i] + self.matrix_dy[i]) * list_jacobian[i]
-            self.H_matrix.append(H_i)
+            Hpci = self.k * (self.matrix_dx[i] + self.matrix_dy[i]) * list_jacobian[i]
+            self.H_matrix.append(Hpci)
 
         if self.points == 2:
             for i, w in enumerate(gauss_weights["w2"]):
