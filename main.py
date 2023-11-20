@@ -1,5 +1,6 @@
 from tests.test import *
 import os
+import easygui
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
 path2 = "./data/txt/Test2.txt"
@@ -14,17 +15,13 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_element_uniwersalny()
 # test_macierz_H(path2,points=2)
 # test_macierz_HBC(points=2,grid=Grid(path2),global_data=Global_Data(path2))
+# test_vectorP(points=2,grid=Grid(path2),global_data=Global_Data(path2))
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
-
-import os
-import easygui
-
 def get_txt(grid_list):
     msg = "Wybierz plik:"
     title = "Wybór pliku"
     txt = easygui.choicebox(msg, title, grid_list)
     return txt
-
 def get_points():
     msg = "Wybierz schemat punktowy:"
     title = "Wybór schematu punktowego"
@@ -64,7 +61,6 @@ def main():
     for element in grid.elements:
         print(element.vectorP)
     print(f"\033[95m*************************************************************\033[0m")
-
 
 if __name__ == "__main__":
     main()

@@ -51,14 +51,14 @@ def test_macierz_H(path,points):
         print(macierz)
     print("------------")
 def test_macierz_HBC(points,grid,global_data):
-    print("---------------------------MACIERZ_H_TEST---------------------------")
+    print("---------------------------MACIERZ_HBC_TEST---------------------------")
     test = Matrix_HBC(points=points, grid=grid,global_data=global_data)
     macierze = test.get_HBC_matrices()
     for macierz in macierze:
         print(macierz)
     print("------------")
 def test_vectorP(points,grid,global_data):
-    print("---------------------------MACIERZ_H_TEST---------------------------")
+    print("---------------------------VECTOR_P_TEST---------------------------")
     test = VectorP(points=points, grid=grid,global_data=global_data)
     macierze = test.get_vectorP_matrices()
     for macierz in macierze:
