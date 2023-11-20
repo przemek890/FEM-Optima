@@ -3,6 +3,7 @@ from src.integrals import integration
 from src.Element_uniwersalny import dNdeta, dNdksi
 from src.MacierzH import Matrix_H
 from src.MacierzHBC import Matrix_HBC
+from src.VectorP import VectorP
 """"""""""""""""""""""""""""""""""""""""""
 def test_write(path):
     print("---------------------------Test_1---------------------------")
@@ -53,6 +54,13 @@ def test_macierz_HBC(points,grid,global_data):
     print("---------------------------MACIERZ_H_TEST---------------------------")
     test = Matrix_HBC(points=points, grid=grid,global_data=global_data)
     macierze = test.get_HBC_matrices()
+    for macierz in macierze:
+        print(macierz)
+    print("------------")
+def test_vectorP(points,grid,global_data):
+    print("---------------------------MACIERZ_H_TEST---------------------------")
+    test = VectorP(points=points, grid=grid,global_data=global_data)
+    macierze = test.get_vectorP_matrices()
     for macierz in macierze:
         print(macierz)
     print("------------")

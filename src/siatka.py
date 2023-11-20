@@ -74,6 +74,7 @@ class Element:
         self.vec = vec4      # 4 - elementowa lista punktów
         self._matrix_H = None
         self._matrix_HBC = None
+        self._vectorP = None
     def __getitem__(self, index):
         return self.vec[index]
     def __len__(self):
@@ -101,9 +102,21 @@ class Element:
         else:
             print("Dany element nie posiada jeszcze Macierzy H - zwrócono None")
             return None
+
     @matrix_HBC.setter
-    def matrix_HBC(self, value):
+    def  matrix_HBC(self, value):
         self._matrix_HBC = value
+
+    @property
+    def vectorP(self):
+        if self._vectorP is not None:
+            return self._vectorP
+        else:
+            print("Dany element nie posiada jeszcze vectorP - zwrócono None")
+            return None
+    @vectorP.setter
+    def vectorP(self, value):
+        self._vectorP = value
 
 """x = grid.nodes[i].x el_4 = grid.elements[i].vec[j]"""
 class Grid:
