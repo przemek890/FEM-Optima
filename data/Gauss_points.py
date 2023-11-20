@@ -32,7 +32,7 @@ def generate_combinations_points(points):
     for i in gauss[f"p{points}"]:   # lewy bok
         com_left.append((-1,i))
     return {"edge_d":com_down,"edge_r":com_right,"edge_t":com_top,"edge_l":com_left}
-edges_2 = generate_combinations_points(2)   # słownik 4 krawędzi kazda krawedz po 2 punktow
+edges_2 = generate_combinations_points(2)  # słownik 4 krawędzi kazda krawedz po 2 punktow
 edges_3 = generate_combinations_points(3)  # słownik 4 krawędzi kazda krawedz po 3 punktow
 edges_4 = generate_combinations_points(4)  # słownik 4 krawędzi kazda krawedz po 4 punktow
 
