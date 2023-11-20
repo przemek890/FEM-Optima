@@ -16,21 +16,21 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_macierz_HBC(points=2,grid=Grid(path2),global_data=Global_Data(path2))
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
 
+import os
+import easygui
+
 def get_txt(grid_list):
-    while True:
-        for file in grid_list: print(f"[ \033[91m{file} \033[0m]")
-        txt = str(input("Podaj nazwę pliku z siatkami: "))
-        if txt in grid_list:
-            return txt
-        print("Błędna nazwa pliku z siatkami - spróbuj ponownie!")
+    msg = "Wybierz plik:"
+    title = "Wybór pliku"
+    txt = easygui.choicebox(msg, title, grid_list)
+    return txt
+
 def get_points():
-    while True:
-        lista_schematow = [2,3,4]
-        for i in lista_schematow: print(f"[ \033[94m{i} \033[0m]")
-        points = int(input("Podaj schemat punktowy dla siatki: "))
-        if points in [2, 3, 4]:
-            return points
-        print("Błędny schemat punktowy - spróbuj ponownie!")
+    msg = "Wybierz schemat punktowy:"
+    title = "Wybór schematu punktowego"
+    lista_schematow = ["2", "3", "4"]
+    points = easygui.choicebox(msg, title, lista_schematow)
+    return int(points)
 def main():
     grid_list = os.listdir("./data/txt")
     txt = get_txt(grid_list)
