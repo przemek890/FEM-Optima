@@ -41,7 +41,7 @@ class VectorP:
                 wynik += gauss[f"w{self.points}"][i] * self.alfa * mat * self.tot * jacobi_list[k]          # agreguj wynik
             warunki_brzegowe.append(wynik)
 
-        return np.sum(warunki_brzegowe, axis=0)
+        return -np.sum(warunki_brzegowe, axis=0)
     def generate_jacobi_list_for_element(self,vec_4):
         if vec_4.to_list()[0].BC == 1 and vec_4.to_list()[1].BC == 1:
             jacobi_1 = np.sqrt((vec_4.to_list()[0].x - vec_4.to_list()[1].x) ** 2 + (vec_4.to_list()[0].y - vec_4.to_list()[1].y) ** 2) / 2
