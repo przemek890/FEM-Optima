@@ -25,7 +25,6 @@ def get_txt(grid_list):
     if txt is None:
         sys.exit()
     return txt
-
 def get_points():
     msg = "Wybierz schemat punktowy:"
     title = "Wybór schematu punktowego"

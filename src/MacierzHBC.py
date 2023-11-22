@@ -6,7 +6,7 @@ class Matrix_HBC:
         self.points = points
         self.global_data = global_data
         self.grid = grid
-        self.k = self.global_data["Conductivity"]
+        self.k = self.global_data["Alfa"]
         self.HBC_matrices = []  # Lista macierzy HBC dla wszystkich elementów vec4
 
         if self.points == 2:
