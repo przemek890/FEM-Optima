@@ -38,7 +38,8 @@ class VectorP:
                 mat = np.zeros((1, 4))
                 for j in range(4):                    # Wylicz dla konkretnego punktu funkcje ksztaltu
                     mat[0][j] = N[j](*point)
-                wynik += gauss[f"w{self.points}"][i] * self.alfa * mat * self.tot * jacobi_list[k]          # agreguj wynik
+                if jacobi_list[k] != 0.0:
+                    wynik += gauss[f"w{self.points}"][i] * self.alfa * mat * self.tot * jacobi_list[k]          # agreguj wynik
             warunki_brzegowe.append(wynik)
 
         return np.sum(warunki_brzegowe, axis=0)

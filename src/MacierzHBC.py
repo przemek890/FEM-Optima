@@ -37,10 +37,11 @@ class Matrix_HBC:
                 mat = np.zeros((1, 4))
                 for j in range(4):                    # Wylicz dla konkretnego punktu funkcje ksztaltu
                     mat[0][j] = N[j](*point)
-                wynik += gauss[f"w{self.points}"][i] * self.k * (mat.T @ mat) * jacobi_list[k]          # agreguj wynik
+                if jacobi_list[k] != 0.0:
+                    wynik += gauss[f"w{self.points}"][i] * self.k * (mat.T @ mat) * jacobi_list[k]
             warunki_brzegowe.append(wynik)
-
         return np.sum(warunki_brzegowe, axis=0)
+
     def generate_jacobi_list_for_element(self,vec_4):
         if vec_4.to_list()[0].BC == 1 and vec_4.to_list()[1].BC == 1:
             jacobi_1 = np.sqrt((vec_4.to_list()[0].x - vec_4.to_list()[1].x) ** 2 + (vec_4.to_list()[0].y - vec_4.to_list()[1].y) ** 2) / 2
