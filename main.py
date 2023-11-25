@@ -15,9 +15,9 @@ f_2 = lambda x,y: 5*(x**2) * (y**2) + 3*x*y + 6
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
 # test_element_uniwersalny()
-test_macierz_H(path2,points=2)
-test_macierz_HBC(points=2,grid=Grid(path2),global_data=Global_Data(path2))
-test_vectorP(points=2,grid=Grid(path2),global_data=Global_Data(path2))
+# test_macierz_H(path2,points=2)
+# test_macierz_HBC(points=2,grid=Grid(path2),global_data=Global_Data(path2))
+# test_vectorP(points=2,grid=Grid(path2),global_data=Global_Data(path2))
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
 def get_txt(grid_list):
     msg = "Wybierz plik:"

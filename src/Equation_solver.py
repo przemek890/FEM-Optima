@@ -21,7 +21,6 @@ class Solver:
                     where_ids[i][j] = (id1, id2)
             self.where_ids_H.append(where_ids)
         self.fill_matrix_H()
-
         ################################################### Vector_P_global
         for element in grid.elements:
             where_ids = np.zeros((1, 4),dtype=int)
@@ -32,10 +31,12 @@ class Solver:
     def fill_matrix_H(self):
         for element, id_mat in zip(self.grid.elements, self.where_ids_H) :
             H = element.matrix_H
+            HBC = element.matrix_HBC
             for i in range(4):
                 for j in range(4):
                     x,y = id_mat[i][j]
                     self.global_H[x][y] += H[i][j]
+                    self.global_H[x][y] += HBC[i][j]
     def fill_vector_P(self):
         for element, id_vec in zip(self.grid.elements, self.where_ids_P):
             P = element.vectorP
@@ -62,6 +63,7 @@ class Solver:
         from scipy.sparse.linalg import spsolve
         from scipy.sparse import csr_matrix
         H_csr = csr_matrix(self.global_H)
+
         T = spsolve(H_csr, -self.global_P)
 
         print("\033[92m" + "______________________________VectorT______________________________" + "\033[0m")
