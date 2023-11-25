@@ -75,6 +75,8 @@ class Element:
         self._matrix_H = None
         self._matrix_HBC = None
         self._vectorP = None
+        self._nodes_IDs = None
+
     def __getitem__(self, index):
         return self.vec[index]
     def __len__(self):
@@ -118,6 +120,18 @@ class Element:
     def vectorP(self, value):
         self._vectorP = value
 
+
+    @property
+    def nodes_IDs(self):
+        if self._nodes_IDs is not None:
+            return self._nodes_IDs
+        else:
+            print("Dany element nie posiada jeszcze vectorP - zwrócono None")
+            return None
+    @nodes_IDs.setter
+    def nodes_IDs(self, value):
+        self._nodes_IDs = value
+
 """x = grid.nodes[i].x el_4 = grid.elements[i].vec[j]"""
 class Grid:
     def __init__(self,file_PATH: str):
@@ -151,7 +165,9 @@ class Grid:
                     if len(parts) == 5:
                         vec_4 = [int(x) for x in parts][1:]
                         vec_4_points = [self.nodes[i-1] for i in vec_4]
-                        self.elements.append(Element(vec_4_points))
+                        vec_element = Element(vec_4_points)
+                        vec_element.nodes_IDs = [int(x) - 1 for x in parts][1:] # Bo numerujemy od 0 w listach
+                        self.elements.append(vec_element)
 
         """DODAWANIE FLAGI BC DO WEZŁA"""
         is_node_section = False
