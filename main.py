@@ -1,5 +1,6 @@
 from tests.test import *
-from src.Equation_solver import Solver
+from src.Aggregation import Aggregation
+from src.Solver import Solver
 import easygui
 import os
 import sys
@@ -49,21 +50,22 @@ def main():
 
     path = os.getcwd() + f"/data/txt/{txt}"
     global_data = Global_Data(path)  # Dane globalne
-    grid = Grid(path)  # Utworz siatkę
+    grid = Grid(path)                # Utworz siatkę
 
-    matrix_H = Matrix_H(points, path)  # Uzyskaj macierze sztywności H dla wszystkich elementów
+    matrix_H = Matrix_H(points, path)                   # Uzyskaj macierze sztywności H dla wszystkich elementów
     matrix_HBC = Matrix_HBC(points, grid, global_data)  # Uzyskaj macierze HBC dla wszystkich elementów
     matrix_vecP = VectorP(points, grid, global_data)
 
     for i, element in enumerate(grid.elements):
-        element.matrix_H = matrix_H.get_H_matrices()[i]  # Dodaj macierz H do elementów
-        element.matrix_HBC = matrix_HBC.get_HBC_matrices()[i]  # Dodaj macierz HBC do elementów
+        element.matrix_H = matrix_H.get_H_matrices()[i]          # Dodaj macierz H do elementów
+        element.matrix_HBC = matrix_HBC.get_HBC_matrices()[i]    # Dodaj macierz HBC do elementów
         element.vectorP = matrix_vecP.get_vectorP_matrices()[i]  # Dodaj VectorP do elementów
 
-    solver = Solver(grid, global_data)  # Klasa do rozwiązywania układu równań
-    solver.test_H_global()              # Test złożenia macierzy H_global
-    solver.test_P_global()              # Test złożenia wektora  P_global
+    aggregate = Aggregation(grid, global_data)     # Klasa do agregacji macierzy
+    aggregate.test_H_global()                      # Test złożenia macierzy H_global
+    aggregate.test_P_global()                      # Test złożenia wektora  P_global
 
+    solver = Solver(aggregate.global_H,aggregate.global_P)          # Klasa do rozwiązywania układu równań
     solver.solve()                      # Rozwiązanie układu równań
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class Solver:
+class Aggregation:
     def __init__(self,grid,global_data):
         self.grid = grid
         self.global_data = global_data
