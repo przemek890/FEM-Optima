@@ -20,6 +20,7 @@ f_2 = lambda x, y: 5 * (x ** 2) * (y ** 2) + 3 * x * y + 6
 # test_macierz_H(path2,points=2)
 # test_macierz_HBC(points=2,grid=Grid(path2),global_data=Global_Data(path2))
 # test_vectorP(points=2,grid=Grid(path2),global_data=Global_Data(path2))
+# test_macierz_C(path2,points=2)
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
 
 
@@ -54,19 +55,26 @@ def main():
 
     matrix_H = Matrix_H(points, path)                   # Uzyskaj macierze sztywności H dla wszystkich elementów
     matrix_HBC = Matrix_HBC(points, grid, global_data)  # Uzyskaj macierze HBC dla wszystkich elementów
-    matrix_vecP = VectorP(points, grid, global_data)
+    matrix_vecP = VectorP(points, grid, global_data)    # Uzyskaj wektor P dla wszystkich elementów
+    matrix_C = Matrix_C(points, path)                   # Uzyskaj macierz C dla wszystkich elementów
 
     for i, element in enumerate(grid.elements):
         element.matrix_H = matrix_H.get_H_matrices()[i]          # Dodaj macierz H do elementów
         element.matrix_HBC = matrix_HBC.get_HBC_matrices()[i]    # Dodaj macierz HBC do elementów
         element.vectorP = matrix_vecP.get_vectorP_matrices()[i]  # Dodaj VectorP do elementów
+        element.matrix_C = matrix_C.get_C_matrices()[i]          # Dodaj Macierz C do elementów
 
-    aggregate = Aggregation(grid, global_data)     # Klasa do agregacji macierzy
-    aggregate.test_H_global()                      # Test złożenia macierzy H_global
-    aggregate.test_P_global()                      # Test złożenia wektora  P_global
+    print("\033[95m" + "-------------------Macierz C-------------------" + "\033[0m")
+    for i,element in enumerate(grid.elements):
+        print(f"{i}: {element.matrix_C}")
+    print("\033[95m" + "-----------------------------------------------" + "\033[0m")
+
+    aggregate = Aggregation(grid, global_data)       # Klasa do agregacji macierzy
+    # aggregate.test_H_global()                      # Test złożenia macierzy H_global
+    # aggregate.test_P_global()                      # Test złożenia wektora  P_global
 
     solver = Solver(aggregate.global_H,aggregate.global_P)          # Klasa do rozwiązywania układu równań
-    solver.solve()                      # Rozwiązanie układu równań
+    solver.solve()                                                  # Rozwiązanie układu równań
 
 
 if __name__ == "__main__":

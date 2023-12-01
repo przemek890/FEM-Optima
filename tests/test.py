@@ -4,6 +4,7 @@ from src.Element_uniwersalny import dNdeta, dNdksi
 from src.MacierzH import Matrix_H
 from src.MacierzHBC import Matrix_HBC
 from src.VectorP import VectorP
+from src.MacierzC import Matrix_C
 """"""""""""""""""""""""""""""""""""""""""
 def test_write(path):
     print("---------------------------Test_1---------------------------")
@@ -61,6 +62,13 @@ def test_vectorP(points,grid,global_data):
     print("---------------------------VECTOR_P_TEST---------------------------")
     test = VectorP(points=points, grid=grid,global_data=global_data)
     macierze = test.get_vectorP_matrices()
+    for macierz in macierze:
+        print(macierz)
+    print("------------")
+def test_macierz_C(path,points):
+    print("---------------------------MACIERZ_C_TEST---------------------------")
+    test = Matrix_C(points=points, path=path)
+    macierze = test.get_C_matrices()
     for macierz in macierze:
         print(macierz)
     print("------------")

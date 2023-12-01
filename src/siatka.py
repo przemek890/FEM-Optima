@@ -68,11 +68,11 @@ class Node:
     def BC(self, value):
         self._BC = value
 
-
 class Element:
     def __init__(self,vec4: list):
         self.vec = vec4      # 4 - elementowa lista punktów
         self._matrix_H = None
+        self._matrix_C = None
         self._matrix_HBC = None
         self._vectorP = None
         self._nodes_IDs = None
@@ -104,10 +104,20 @@ class Element:
         else:
             print("Dany element nie posiada jeszcze Macierzy H - zwrócono None")
             return None
-
     @matrix_HBC.setter
     def  matrix_HBC(self, value):
         self._matrix_HBC = value
+
+    @property
+    def matrix_C(self):
+        if self._matrix_C is not None:
+            return self._matrix_C
+        else:
+            print("Dany element nie posiada jeszcze Macierzy H - zwrócono None")
+            return None
+    @matrix_C.setter
+    def  matrix_C(self, value):
+        self._matrix_C = value
 
     @property
     def vectorP(self):
