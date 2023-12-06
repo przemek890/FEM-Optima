@@ -64,17 +64,17 @@ def main():
         element.vectorP = matrix_vecP.get_vectorP_matrices()[i]  # Dodaj VectorP do elementów
         element.matrix_C = matrix_C.get_C_matrices()[i]          # Dodaj Macierz C do elementów
 
-    print("\033[95m" + "-------------------Macierz C-------------------" + "\033[0m")
-    for i,element in enumerate(grid.elements):
-        print(f"{i}: {element.matrix_C}")
-    print("\033[95m" + "-----------------------------------------------" + "\033[0m")
 
     aggregate = Aggregation(grid, global_data)       # Klasa do agregacji macierzy
     # aggregate.test_H_global()                      # Test złożenia macierzy H_global
     # aggregate.test_P_global()                      # Test złożenia wektora  P_global
+    # aggregate.test_C_global()                      # Test złożenia macierzy C_global
 
-    solver = Solver(aggregate.global_H,aggregate.global_P)          # Klasa do rozwiązywania układu równań
-    solver.solve()                                                  # Rozwiązanie układu równań
+
+
+
+    solver = Solver(global_data,aggregate.global_H,aggregate.global_P,aggregate.global_C)       # Klasa do rozwiązywania układu równań
+    solver.solve()                                                                              # Rozwiązanie układu równań
 
 
 if __name__ == "__main__":

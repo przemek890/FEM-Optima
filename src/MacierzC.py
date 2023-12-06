@@ -32,7 +32,6 @@ class Matrix_C:
             C_matrix = self.generate_C_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4)
             self.C_matrices.append(C_matrix)
 
-
     def generate_C_matrix_for_element(self,vec_el_ksi,vec_el_eta,vec_4):
         self.matrix_dx = np.zeros((self.points ** 2, 4))
         self.matrix_dy = np.zeros((self.points ** 2, 4))
@@ -66,7 +65,6 @@ class Matrix_C:
 
         self.C_matrix = np.sum(self.C_matrix,axis=0)
         return self.C_matrix
-
 
     @staticmethod
     def jacobian_calculate(vec_dNidksi,vec_dNideta,vec4):

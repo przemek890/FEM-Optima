@@ -68,10 +68,10 @@ class dNdeta:
     def matrix(self):
         return self.matrix
 class NFun:
-    N1 = lambda ksi,eta: 0.25 * (1 - ksi) * (1 - eta)
-    N2 = lambda ksi,eta: 0.25 * (1 + ksi) * (1 - eta)
-    N3 = lambda ksi,eta: 0.25 * (1 + ksi) * (1 + eta)
-    N4 = lambda ksi,eta: 0.25 * (1 - ksi) * (1 + eta)
+    N1 = lambda eta,ksi: 0.25 * (1 - ksi) * (1 - eta)
+    N2 = lambda eta,ksi: 0.25 * (1 + ksi) * (1 - eta)
+    N3 = lambda eta,ksi: 0.25 * (1 + ksi) * (1 + eta)
+    N4 = lambda eta,ksi: 0.25 * (1 - ksi) * (1 + eta)
     funkcje = [N1, N2, N3, N4]
 
     def __init__(self, points):
