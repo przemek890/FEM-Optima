@@ -4,7 +4,6 @@ from src.Solver import Solver
 import easygui
 import os
 import sys
-
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
 path2 = "./data/txt/Test2.txt"
@@ -22,7 +21,6 @@ f_2 = lambda x, y: 5 * (x ** 2) * (y ** 2) + 3 * x * y + 6
 # test_vectorP(points=2,grid=Grid(path2),global_data=Global_Data(path2))
 # test_macierz_C(path2,points=2)
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
-
 
 def get_txt(grid_list):
     while True:
@@ -64,13 +62,14 @@ def main():
         element.vectorP = matrix_vecP.get_vectorP_matrices()[i]  # Dodaj VectorP do elementów
         element.matrix_C = matrix_C.get_C_matrices()[i]          # Dodaj Macierz C do elementów
 
+    # Macierze C lokalne [TEST]
+    # for i, element in enumerate(grid.elements):
+    #     print(i," ",element.matrix_C)
 
     aggregate = Aggregation(grid, global_data)       # Klasa do agregacji macierzy
     # aggregate.test_H_global()                      # Test złożenia macierzy H_global
     # aggregate.test_P_global()                      # Test złożenia wektora  P_global
     # aggregate.test_C_global()                      # Test złożenia macierzy C_global
-
-
 
 
     solver = Solver(global_data,aggregate.global_H,aggregate.global_P,aggregate.global_C)       # Klasa do rozwiązywania układu równań

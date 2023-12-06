@@ -2,10 +2,10 @@ import numpy as np
 from data.Gauss_points import gauss_points
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 class dNdksi:
-    N1dksi = lambda ksi,eta: -0.25 * (1 - ksi)
-    N2dksi = lambda ksi,eta: 0.25 * (1 - ksi)
-    N3dksi = lambda ksi,eta: 0.25 * (1 + ksi)
-    N4dksi = lambda ksi,eta: -0.25 * (1 + ksi)
+    N1dksi = lambda eta,ksi: -0.25 * (1 - eta)
+    N2dksi = lambda eta,ksi: 0.25 * (1 - eta)
+    N3dksi = lambda eta,ksi: 0.25 * (1 + eta)
+    N4dksi = lambda eta,ksi: -0.25 * (1 + eta)
     funkcje = [N1dksi,N2dksi,N3dksi,N4dksi]
 
     def __init__(self, points):
@@ -35,10 +35,10 @@ class dNdksi:
     def matrix(self):
         return self.matrix
 class dNdeta:
-    N1deta = lambda ksi,eta: -0.25 * (1 - eta)
-    N2deta = lambda ksi,eta: -0.25 * (1 + eta)
-    N3deta = lambda ksi,eta: 0.25 * (1 + eta)
-    N4deta = lambda ksi,eta: 0.25 * (1 - eta)
+    N1deta = lambda eta,ksi: -0.25 * (1 - ksi)
+    N2deta = lambda eta,ksi: -0.25 * (1 + ksi)
+    N3deta = lambda eta,ksi: 0.25 * (1 + ksi)
+    N4deta = lambda eta,ksi: 0.25 * (1 - ksi)
     funkcje = [N1deta, N2deta, N3deta, N4deta]
 
     def __init__(self, points):

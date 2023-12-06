@@ -20,7 +20,7 @@ class Solver:
         print("\033[92m" + f"______________________________VectorT // time={time}______________________________" + "\033[0m")
         T_array = np.array(T)
         np.set_printoptions(self.global_data["Nodes_number"], linewidth=100000)
-        print(T_array.reshape(1,-1),T_array.reshape(1,-1))
+        print(T_array.reshape(1,-1))
         print("\033[92m" + "__________________________________________________________________________________" + "\033[0m")
 
     ######################################## Solve:
