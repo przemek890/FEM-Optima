@@ -25,11 +25,10 @@ class Solver:
 
     ######################################## Solve:
     def solve(self):
+        matric_c_per_step = self.global_C / self.SimulationStepTime
+        matrix_glob = self.global_H + matric_c_per_step
+
         for time in range(self.SimulationStepTime,self.SimulationTime + self.SimulationStepTime,self.SimulationStepTime):
-
-            matric_c_per_step = self.global_C / self.SimulationStepTime
-            matrix_glob = self.global_H + matric_c_per_step
-
             T1 = spsolve(csr_matrix(matrix_glob), self.global_P + (matric_c_per_step @ self.T0))
 
             T1 = np.array(T1).reshape(-1,1)
