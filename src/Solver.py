@@ -28,13 +28,18 @@ class Solver:
         matric_c_per_step = self.global_C / self.SimulationStepTime
         matrix_glob = self.global_H + matric_c_per_step
 
+        T_opt = []
+
         for time in range(self.SimulationStepTime,self.SimulationTime + self.SimulationStepTime,self.SimulationStepTime):
             T1 = spsolve(csr_matrix(matrix_glob), self.global_P + (matric_c_per_step @ self.T0))
 
             T1 = np.array(T1).reshape(-1,1)
 
             self.print_T(T1,time)
+            T_opt.append(T1)
             self.T0 = T1
+
+        return np.array(T_opt)
 
 
 

@@ -1,6 +1,7 @@
 from tests.test import *
 from src.Aggregation import Aggregation
 from src.Solver import Solver
+from src.Paraview import Paraview
 import easygui
 import os
 import sys
@@ -67,7 +68,10 @@ def main():
 
 
     solver = Solver(global_data,aggregate.global_H,aggregate.global_P,aggregate.global_C)       # Klasa do rozwiązywania układu równań
-    solver.solve()                                                                              # Rozwiązanie układu równań
+    t_opt = solver.solve()                                                                      # Rozwiązanie układu równań
+
+    paraview = Paraview(t_opt,global_data,grid,f"{txt.split('.')[0]}",points)
+    paraview.generate_paraview_files()
 
 
 if __name__ == "__main__":
