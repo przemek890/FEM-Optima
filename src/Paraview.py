@@ -17,7 +17,7 @@ class Paraview:
         num_wsp = len(self.grid.elements[0])
 
         for time in range(self.SimulationStepTime, self.SimulationTime + self.SimulationStepTime,self.SimulationStepTime):
-            with open(self.path + f'{self.catalog_name}/{self.points}/{time}.vtk', 'w') as file:
+            with open(self.path + f'{self.catalog_name}/{self.points}/sol_{time}.vtk', 'w') as file:
                 file.write('# vtk DataFile Version 2.0\n')
                 file.write('Unstructured Grid Example\n')
                 file.write('ASCII\n')
