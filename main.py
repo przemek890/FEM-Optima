@@ -5,6 +5,7 @@ from src.Paraview import Paraview
 import easygui
 import os
 import sys
+import time
 """"""""""""""""""""""""""""""""""""""
 path1 = "./data/txt/Test1.txt"
 path2 = "./data/txt/Test2.txt"
@@ -12,7 +13,7 @@ path3 = "./data/txt/Test3.txt"
 f_1 = lambda x: 5 * (x ** 2) + 3 * x + 6
 f_2 = lambda x, y: 5 * (x ** 2) * (y ** 2) + 3 * x * y + 6
 """"""""""""""""""""""""""""""""""""""
-# test_write(path=path1)
+test_write(path=path1)
 # test_write(path=path2)
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
@@ -49,6 +50,7 @@ def main():
     global_data = Global_Data(path)  # Dane globalne
     grid = Grid(path)                # Utworz siatkę
 
+    t1 = time.time()
     matrix_H = Matrix_H(points, path)                   # Uzyskaj macierze sztywności H dla wszystkich elementów
     matrix_HBC = Matrix_HBC(points, grid, global_data)  # Uzyskaj macierze HBC dla wszystkich elementów
     matrix_vecP = VectorP(points, grid, global_data)    # Uzyskaj wektor P dla wszystkich elementów
@@ -69,6 +71,10 @@ def main():
 
     solver = Solver(global_data,aggregate.global_H,aggregate.global_P,aggregate.global_C)       # Klasa do rozwiązywania układu równań
     t_opt = solver.solve()                                                                      # Rozwiązanie układu równań
+
+    t2 = time.time()
+
+    print(f"Czas obliczeń: {t2-t1}")
 
     paraview = Paraview(t_opt,global_data,grid,f"{txt.split('.')[0]}",points)
     paraview.generate_paraview_files()

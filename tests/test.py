@@ -10,7 +10,11 @@ def test_write(path):
     print("---------------------------Test_1---------------------------")
     print("------------------------------------------------------------")
     global_data = Global_Data(path)
-    print(f'Test: SimulationTime: {global_data["SimulationTime"]} , Elements_number: {global_data["Elements_number"]}')
+    print(f'Test: SimulationTime: {global_data["SimulationTime"]} , SimulationStepTime: {global_data["SimulationStepTime"]}')
+    print(f'Test: Conductivity: {global_data["Conductivity"]} , Alfa: {global_data["Alfa"]}')
+    print(f'Test: Tot: {global_data["Tot"]} , InitialTemp: {global_data["InitialTemp"]}')
+    print(f'Test: Density: {global_data["Density"]} , SpecificHeat: {global_data["SpecificHeat"]}')
+    print(f'Test: Nodes_number: {global_data["Nodes_number"]} , Elements_number: {global_data["Elements_number"]}')
     print("------------")
     grid = Grid(path)
     for i in range(len(grid.nodes)):
