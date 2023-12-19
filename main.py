@@ -13,7 +13,7 @@ path3 = "./data/txt/Test3.txt"
 f_1 = lambda x: 5 * (x ** 2) + 3 * x + 6
 f_2 = lambda x, y: 5 * (x ** 2) * (y ** 2) + 3 * x * y + 6
 """"""""""""""""""""""""""""""""""""""
-test_write(path=path1)
+# test_write(path=path1)
 # test_write(path=path2)
 # test_write(path=path3)
 # test_integrate(f1=f_1,f2=f_2)
@@ -74,7 +74,7 @@ def main():
 
     t2 = time.time()
 
-    print(f"Czas obliczeń: {t2-t1}")
+    print(f"Czas obliczeń: {t2-t1} s")
 
     paraview = Paraview(t_opt,global_data,grid,f"{txt.split('.')[0]}",points)
     paraview.generate_paraview_files()

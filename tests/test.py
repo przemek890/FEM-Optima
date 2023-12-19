@@ -7,7 +7,7 @@ from src.VectorP import VectorP
 from src.MacierzC import Matrix_C
 """"""""""""""""""""""""""""""""""""""""""
 def test_write(path):
-    print("---------------------------Test_1---------------------------")
+    print("---------------------------TEST_GRID---------------------------")
     print("------------------------------------------------------------")
     global_data = Global_Data(path)
     print(f'Test: SimulationTime: {global_data["SimulationTime"]} , SimulationStepTime: {global_data["SimulationStepTime"]}')
