@@ -30,7 +30,7 @@ class Matrix_HBC:
         jacobi_list = self.generate_jacobi_list_for_element(vec_4)  # Jakobiany dla poszczególnych boków [uwzględniony warunek BC]
         """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-        warunki_brzegowe = []                         # [dolna,prawa,gorna,lewa] jeżeli dotyczy
+        warunki_brzegowe = []                         # [dolna,prawa,gorna,lewa]
         for k,edge in enumerate(edges_list):          # dla kazdej krawedzi elementu
             wynik = np.zeros((4, 4))
             for i,point in enumerate(edge):           # przejdz przez punkty w krawedzi
@@ -45,7 +45,7 @@ class Matrix_HBC:
     def generate_jacobi_list_for_element(self,vec_4):
         if vec_4.to_list()[0].BC == 1 and vec_4.to_list()[1].BC == 1:
             jacobi_1 = np.sqrt((vec_4.to_list()[0].x - vec_4.to_list()[1].x) ** 2 + (vec_4.to_list()[0].y - vec_4.to_list()[1].y) ** 2) / 2
-        else: jacobi_1 = 0.0  # """wyzeruje macierz - bo wtedy nie uwzgledniamy danej krawedzi [ Bez tego warunku wszystkie krawedzie sa zewnetrzne ]"""
+        else: jacobi_1 = 0.0  # """Nie uwzględniaj danej krawędzi w liczeniu macierzy HBC"""
 
         if vec_4.to_list()[1].BC == 1 and vec_4.to_list()[2].BC == 1:
             jacobi_2 = np.sqrt((vec_4.to_list()[1].x - vec_4.to_list()[2].x) ** 2 + (vec_4.to_list()[1].y - vec_4.to_list()[2].y) ** 2) / 2
