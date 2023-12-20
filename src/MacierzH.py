@@ -34,7 +34,7 @@ class Matrix_H:
         for i in range(self.points ** 2):
             for j in range(4):
                 vec_2 = np.array([[vec_el_ksi.matrix[i,j], vec_el_eta.matrix[i,j]]])
-                vec_dNidksi = np.array(vec_el_ksi.matrix[i,:])
+                vec_dNidksi = np.array(vec_el_ksi.matrix[i,:]) # pobierz i-ty wiersz
                 vec_dNideta = np.array(vec_el_eta.matrix[i,:])
                 wynik = self.przejscie(vec_dNidksi,vec_dNideta,vec_2, vec_4)
                 vec_dx_dy = wynik[0]

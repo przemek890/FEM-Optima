@@ -157,7 +157,7 @@ class Grid:
                 if line.strip() == "*Node": is_node_section = True
                 elif line.strip().split(',')[0] == "*Element": is_node_section = False
 
-                elif is_node_section and line.strip():
+                elif is_node_section and line.strip(): # Pusty ciąg -> False
                     parts = line.strip().split(",")
                     if len(parts) == 3:
                         x, y = float(parts[1].strip()), float(parts[2].strip())
