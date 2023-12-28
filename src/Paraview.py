@@ -33,7 +33,7 @@ class Paraview:
                     ids = element.nodes_IDs
                     file.write(f"{num_wsp} {ids[0]} {ids[1]} {ids[2]} {ids[3]}\n")
 
-                file.write(f'\nCELL_TYPES 9\n')
+                file.write(f'\nCELL_TYPES 900\n')
                 for _ in range(num_el):
                     file.write('9\n')
 
