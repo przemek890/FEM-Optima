@@ -21,7 +21,7 @@ class Solver:
         T_array = np.array(T)
         np.set_printoptions(self.global_data["Nodes_number"], linewidth=100000)
         print(T_array.reshape(1,-1))
-        # print("min: ",min(T_array),"; max:",max(T_array))
+        print("min: ",min(T_array),"; max:",max(T_array))
         print("\033[92m" + "__________________________________________________________________________________" + "\033[0m")
 
     ######################################## Solve:
