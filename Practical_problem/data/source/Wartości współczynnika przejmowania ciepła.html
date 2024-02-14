@@ -1,0 +1,68 @@
+
+<!-- saved from url=(0038)http://if.pk.edu.pl/tabele/wPrzejC.htm -->
+<html data-lt-installed="true"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Wartości współczynnika przejmowania ciepła</title>
+<link rel="stylesheet" type="text/css" href="./Wartości współczynnika przejmowania ciepła_files/styl.css">
+<style>[_nghost-ng-c4214649903]{font-family:Open Sans,sans-serif;color:#121212}</style></head>
+
+<body>
+
+<h2 align="center">Wartości współczynnika przejmowania ciepła dla róźnych nośników ciepła i typów konwekcji</h2>
+
+
+<div align="center">
+
+<table width="75%" bordercolor="#000000" border="3" cellspacing="0">
+  <colgroup><col align="left" bgcolor="#CCCCCC" width="30%">
+  <col align="center" bgcolor="#CCCCCC" width="35%">
+  <col align="center" width="35%">
+  </colgroup><tbody><tr bgcolor="#CCCCCC">
+    <th align="center">Rodzaj nośnika</th> <th>Typ konwekcji</th> <th>Współczynnik przejmowania ciepła<br>[<i>W/(m<sup>2</sup> · K)</i>]</th> </tr>
+  <tr> <th>&nbsp; &nbsp; Powietrze</th> <td>konwekcja naturalna</td> <td>7</td> </tr>
+  <tr> <th>&nbsp; &nbsp; Woda</th> <td>konwekcja naturalna</td> <td>500</td> </tr>
+  <tr> <th>&nbsp; &nbsp; Powietrze</th> <td>konwekcja wymuszona</td> <td>50</td> </tr>
+  <tr> <th>&nbsp; &nbsp; Woda</th> <td>konwekcja wymuszona</td> <td>10 000</td> </tr>
+  <tr> <th>&nbsp; &nbsp; Woda</th> <td>wrzątek</td> <td>30 000</td> </tr>
+</tbody></table>
+
+</div>
+<br>
+
+<hr size="4">
+
+<script language="JavaScript">
+function initArray()
+{
+this.length = initArray.arguments.length
+for (var i=0;i<this.length;i++)
+this[i+1] = initArray.arguments[i]
+}
+
+var DOWArray = new initArray("niedziela", "poniedziałek", "wtorek",
+  "środa", "czwartek", "piątek", "sobota");
+
+var MOYArray = new initArray("stycznia", "lutego", "marca", "kwietnia", "maja",
+  "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia");
+
+var LastModDate = new Date(document.lastModified);
+
+var i; // zmienna pomocnicza do sprawdzania y2kbug
+
+document.write("<b>Ostatnia aktualizacja strony</b>: ");
+document.write(DOWArray[(LastModDate.getDay()+1)],", ");
+document.write(LastModDate.getDate()," ");
+document.write(MOYArray[(LastModDate.getMonth()+1)]," ");
+
+// START sprawdzanie wyświetlania daty przez przeglądarki IE i NN
+i=LastModDate.getFullYear();
+if (i<1900) {i=i+1900;}
+document.write(i,".");
+// STOP sprawdzanie wyświetlania daty przez przeglądarki IE i NN
+
+</script><b>Ostatnia aktualizacja strony</b>: niedziela, 6 sierpnia 2017.
+
+
+
+
+</body><app-content ng-version="16.0.0"><template shadowrootmode="open"><!----><app-similar-tools _nghost-ng-c4214649903=""><!----><!----><!----></app-similar-tools><!----><!----><style>[_nghost-ng-c4214649903]{font-family:Open Sans,sans-serif;color:#121212}</style></template></app-content></html>
