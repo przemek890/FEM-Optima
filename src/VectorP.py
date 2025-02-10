@@ -1,5 +1,5 @@
 import numpy as np
-from Data.Gauss_points import edges_2,edges_3,edges_4, gauss
+from data.Gauss_points import edges_2,edges_3,edges_4, gauss
 
 class VectorP:
     def __init__(self,points,grid,global_data):

@@ -1,6 +1,6 @@
 from src.siatka import Grid, Global_Data, Element, Node
 from src.Element_uniwersalny import *
-from Data.Gauss_points import gauss_weights
+from data.Gauss_points import gauss_weights
 """"""""""""""""""""""""
 class Matrix_H:
     def __init__(self,points,path):

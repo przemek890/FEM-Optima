@@ -1,5 +1,5 @@
 import numpy as np
-from Data.Gauss_points import gauss_points
+from data.Gauss_points import gauss_points
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 class dNdksi:
     N1dksi = lambda eta,ksi: -0.25 * (1 - eta)
