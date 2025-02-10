@@ -1,6 +1,6 @@
 from typing import Callable
 import inspect
-from data.Gauss_points import gauss
+from Data.Gauss_points import gauss
 """"""""""""""""""""
 def integration(f: Callable,dim:int,points: int):
     wynik = 0

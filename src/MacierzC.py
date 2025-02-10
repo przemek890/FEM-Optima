@@ -1,6 +1,6 @@
 from src.siatka import Grid, Global_Data, Element, Node
 from src.Element_uniwersalny import *
-from data.Gauss_points import gauss_weights
+from Data.Gauss_points import gauss_weights
 """"""""""""""""""""""""
 class Matrix_C:
     def __init__(self,points,path):
@@ -24,15 +24,30 @@ class Matrix_C:
 
         global_data = Global_Data(path)
         grid = Grid(path)
-        self.cp = global_data["SpecificHeat"]
-        self.rho = global_data["Density"]
+        self.cp_brick = global_data["SpecificHeat_brick"]
+        self.rho_brick = global_data["Density_brick"]
+        self.cp_styrofoam  = global_data["SpecificHeat_styrofoam"]
+        self.rho_styrofoam  = global_data["Density_styrofoam"]
+        self.cp_plaster = global_data["SpecificHeat_plaster"]
+        self.rho_plaster = global_data["Density_plaster"]
+        self.num_elem = global_data["Elements_number"]
 
         self.C_matrices = []    # Lista macierzy C dla wszystkich elementów vec4
-        for vec_4 in grid.elements:
-            C_matrix = self.generate_C_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4)
-            self.C_matrices.append(C_matrix)
 
-    def generate_C_matrix_for_element(self,vec_el_ksi,vec_el_eta,vec_4):
+        row = np.sqrt(self.num_elem)
+        for nr,vec_4 in enumerate(grid.elements):
+            if 0 <= nr < 1 * row :
+                C_matrix = self.generate_C_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4,self.cp_plaster,self.rho_plaster)
+                self.C_matrices.append(C_matrix)
+            elif 1 * row  <= nr < 15 * row:
+                C_matrix = self.generate_C_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4,self.cp_styrofoam,self.rho_styrofoam)
+                self.C_matrices.append(C_matrix)
+            else:  # 7 * row <= nr <= 30 * row
+                C_matrix = self.generate_C_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4,self.cp_brick,self.rho_brick)
+                self.C_matrices.append(C_matrix)
+
+
+    def generate_C_matrix_for_element(self,vec_el_ksi,vec_el_eta,vec_4,cp,rho):
         self.matrix_dx = np.zeros((self.points ** 2, 4))
         self.matrix_dy = np.zeros((self.points ** 2, 4))
         list_jacobian = []
@@ -48,7 +63,7 @@ class Matrix_C:
 
         self.C_matrix = []  # Tablica poszczególnych macierzy cząstkowych - macierzy C
         for i in range(self.points ** 2):
-            Cpci = self.cp * self.rho * self.matrix_N[i] * list_jacobian[i]
+            Cpci = cp * rho * self.matrix_N[i] * list_jacobian[i]
             self.C_matrix.append(Cpci)
 
         if self.points == 2:

@@ -5,7 +5,7 @@ class Aggregation:
     def __init__(self,grid,global_data):
         self.grid = grid
         self.global_data = global_data
-        self.dim = dim = global_data["Nodes_number"]
+        self.dim = dim = int(global_data["Nodes_number"])
 
         self.global_H = np.zeros((dim,dim))
         self.where_ids_H = []

@@ -1,6 +1,6 @@
 from src.siatka import Grid, Global_Data, Element, Node
 from src.Element_uniwersalny import *
-from data.Gauss_points import gauss_weights
+from Data.Gauss_points import gauss_weights
 """"""""""""""""""""""""
 class Matrix_H:
     def __init__(self,points,path):
@@ -19,15 +19,29 @@ class Matrix_H:
 
         global_data = Global_Data(path)
         grid = Grid(path)
-        self.k = global_data["Conductivity"]
+        self.k_brick = global_data["Conductivity_brick"]
+        self.k_styrofoam = global_data["Conductivity_styrofoam"]
+        self.k_plaster = global_data["Conductivity_plaster"]
+
+        self.num_elem = global_data["Elements_number"]
 
         self.H_matrices = []    # Lista macierzy H dla wszystkich elementów vec4
-        for vec_4 in grid.elements:
-            H_matrix = self.generate_H_matrix_for_element(vec_el_ksi,vec_el_eta,vec_4)
-            self.H_matrices.append(H_matrix)
 
+        ####################################################################################################
+        row = np.sqrt(self.num_elem)
+        for nr,vec_4 in enumerate(grid.elements):
+            if 0 <= nr < 1 * row :
+                H_matrix = self.generate_H_matrix_for_element(vec_el_ksi, vec_el_eta, vec_4,self.k_plaster)
+                self.H_matrices.append(H_matrix)
+            elif 1 * row  <= nr < 10 * row:
+                H_matrix = self.generate_H_matrix_for_element(vec_el_ksi, vec_el_eta, vec_4,self.k_styrofoam)
+                self.H_matrices.append(H_matrix)
+            else: # 7 * row <= nr <= 30 * row
+                H_matrix = self.generate_H_matrix_for_element(vec_el_ksi, vec_el_eta, vec_4,self.k_brick)
+                self.H_matrices.append(H_matrix)
+        ####################################################################################################
 
-    def generate_H_matrix_for_element(self,vec_el_ksi,vec_el_eta,vec_4):
+    def generate_H_matrix_for_element(self,vec_el_ksi,vec_el_eta,vec_4,k):
         self.matrix_dx = np.zeros((self.points ** 2, 4))
         self.matrix_dy = np.zeros((self.points ** 2, 4))
         list_jacobian = []
@@ -48,7 +62,7 @@ class Matrix_H:
 
         self.H_matrix = []  # Tablica poszczególnych macierzy cząstkowych - macierzy H
         for i in range(self.points ** 2):
-            Hpci = self.k * (self.matrix_dx[i] + self.matrix_dy[i]) * list_jacobian[i]
+            Hpci = k * (self.matrix_dx[i] + self.matrix_dy[i]) * list_jacobian[i]
             self.H_matrix.append(Hpci)
 
         if self.points == 2:

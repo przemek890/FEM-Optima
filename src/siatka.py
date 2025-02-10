@@ -12,7 +12,7 @@ class Global_Data:
         variables = {}
         self.file_path = file_PATH
         with open(f'{self.file_path}', 'r') as file:
-            for i in range(10):
+            for i in range(16):
                 line = file.readline()
                 parts = line.split()
 
@@ -24,7 +24,7 @@ class Global_Data:
                 if len(parts) == 3:
                     variable_name = f"{parts[0]}_{parts[1]}"
                     variable_value = parts[2]
-                    variables[variable_name] = int(variable_value)
+                    variables[variable_name] = float(variable_value)
 
         self.variables = variables
 

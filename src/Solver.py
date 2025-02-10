@@ -2,7 +2,6 @@ import numpy as np
 from scipy.sparse.linalg import spsolve
 from scipy.sparse import csr_matrix
 
-
 class Solver:
     def __init__(self,global_data,global_H,global_P,global_C):
         self.global_H = global_H
@@ -14,13 +13,13 @@ class Solver:
         self.SimulationStepTime = global_data["SimulationStepTime"]
         self.InitialTemp = global_data["InitialTemp"]
 
-        self.T0 = np.full((self.global_data["Nodes_number"],1), self.InitialTemp)
+        self.T0 = np.full((int(self.global_data["Nodes_number"]),1), self.InitialTemp)
 
     def print_T(self,T,time):
         print("\033[92m" + f"______________________________VectorT // time={time}______________________________" + "\033[0m")
         T_array = np.array(T)
-        np.set_printoptions(self.global_data["Nodes_number"], linewidth=100000)
-        print(T_array.reshape(1,-1))
+        np.set_printoptions(int(self.global_data["Nodes_number"]), linewidth=100000)
+        # print(T_array.reshape(1,-1))
         print("min: ",min(T_array),"; max:",max(T_array))
         print("\033[92m" + "__________________________________________________________________________________" + "\033[0m")
 

@@ -1,4 +1,4 @@
-from tests.test import *
+from src.tests.test import *
 from src.Aggregation import Aggregation
 from src.Solver import Solver
 from src.Paraview import Paraview
@@ -7,10 +7,7 @@ import os
 import sys
 import time
 """"""""""""""""""""""""""""""""""""""
-path1 = "./data/txt/Test1.txt"
-path2 = "./data/txt/Test2.txt"
-path3 = "./data/txt/Test3.txt"
-path4 = "./data/txt/Test4.txt"
+path3 = "./Data/txt/Simulation.txt"
 f_1 = lambda x: 5 * (x ** 2) + 3 * x + 6
 f_2 = lambda x, y: 5 * (x ** 2) * (y ** 2) + 3 * x * y + 6
 """"""""""""""""""""""""""""""""""""""
@@ -24,14 +21,8 @@ f_2 = lambda x, y: 5 * (x ** 2) * (y ** 2) + 3 * x * y + 6
 # test_vectorP(points=2,grid=Grid(path2),global_data=Global_Data(path2))
 # test_macierz_C(path2,points=2)
 """"""""""""""""""""""""""""""""""""""""" ""MAIN"""
-def get_txt(grid_list):
-    while True:
-        msg = "Wybierz plik:"
-        title = "Plik z siatkami"
-        txt = easygui.choicebox(msg, title, grid_list)
-        if txt is None:
-            sys.exit()
-        return txt
+def get_txt():
+    return "Simulation.txt"
 def get_points():
     msg = "Wybierz schemat punktowy:"
     title = "Schemat całkowania"
@@ -43,11 +34,11 @@ def get_points():
 
 
 def main():
-    grid_list = os.listdir("./data/txt")
-    txt = get_txt(grid_list)
+    grid_list = os.listdir("./Data/txt")
+    txt = get_txt()
     points = get_points()
 
-    path = os.getcwd() + f"/data/txt/{txt}"
+    path = os.getcwd() + f"/Data/txt/{txt}"
     global_data = Global_Data(path)  # Dane globalne
     grid = Grid(path)                # Utworz siatkę
 
@@ -81,5 +72,24 @@ def main():
     paraview.generate_paraview_files()
 
 
+
+def multiply_floats(line):
+    parts = line.split(',')
+    for i in range(1, len(parts)):
+        try:
+            value = float(parts[i])
+            parts[i] = str(value * 4)
+        except ValueError:
+            pass
+    return ','.join(parts)
+def process_section(lines):
+    new_lines = []
+    for i in range(0, len(lines), 3):
+        new_lines.extend(multiply_floats(line) for line in lines[i:i + 3])
+    return '\n'.join(new_lines)
+
 if __name__ == "__main__":
     main()
+
+
+

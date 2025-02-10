@@ -22,22 +22,22 @@ class Paraview:
                 file.write('Unstructured Grid Example\n')
                 file.write('ASCII\n')
                 file.write('DATASET UNSTRUCTURED_GRID\n\n')
-                file.write(f'POINTS {num_nod} float\n')
+                file.write(f'POINTS {int(num_nod)} float\n')
 
                 for node in self.grid.nodes:
                     file.write(f'{node.x} {node.y} 0\n')
 
-                file.write(f'\nCELLS {num_el } {num_el  * (num_wsp+1)}\n')
+                file.write(f'\nCELLS {int(num_el) } {int(num_el)  * (num_wsp+1)}\n')
 
                 for element in self.grid.elements:
                     ids = element.nodes_IDs
                     file.write(f"{num_wsp} {ids[0]} {ids[1]} {ids[2]} {ids[3]}\n")
 
                 file.write(f'\nCELL_TYPES 900\n')
-                for _ in range(num_el):
+                for _ in range(int(num_el)):
                     file.write('9\n')
 
-                file.write(f'\nPOINT_DATA {num_nod}\n')
+                file.write(f'\nPOINT_DATA {int(num_nod)}\n')
                 file.write('SCALARS Temp float 1\n')
                 file.write('LOOKUP_TABLE default\n')
 
